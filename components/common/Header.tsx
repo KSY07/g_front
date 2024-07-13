@@ -32,14 +32,14 @@ export const Header = () => {
 
             <NavbarContent className="sm:hidden pr-3" justify="center">
                 <NavbarBrand>
-                    <img src="/Gongson_ico.png" width={50} height={50}/>
+                    <img src="/Gongson_ico.png" width={50} height={50} alt="logo"/>
                     <p className="font-bold text-inherit">공간손길</p>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarBrand>
-                    <img src="/Gongson_ico.png" width={50} height={50}/>
+                    <img src="/Gongson_ico.png" width={50} height={50} alt="logo"/>
                     <p className="font-bold text-inherit text-2xl ml-2">공간손길</p>
                 </NavbarBrand>
                 <NavbarItem>
