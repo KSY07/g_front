@@ -1,0 +1,49 @@
+.header {
+
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding-right: 20rem;
+    padding-left: 20rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+}
+
+.button {}
+
+.button :hover {
+    color: #2db7f5;
+}
+
+.logo {
+    margin-right: 2rem; /* 로고와 메뉴 사이의 간격 조정 */
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation a, .headerRight a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+}
