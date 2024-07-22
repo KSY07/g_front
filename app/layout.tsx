@@ -7,6 +7,8 @@ import { Providers } from "./providers";
 import { fontSans } from "@/config/fonts";
 import { Header } from "@/components/common/Header";
 import { Footer } from "@/components/common/Footer";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: "공간을 더 스마트하게 만드는, 공간손길",
@@ -45,6 +47,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <ToastContainer />
         </Providers>
       </body>
     </html>

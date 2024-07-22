@@ -1,7 +1,19 @@
 import { ReviewCard } from "@/components/main/ReviewCard";
 import {PremiumReviewCard} from "@/components/main/PremiumReviewCard";
+import { useEffect, useState } from "react";
 
 export function PopularTags() {
+  const [premiumReviewCards, setPremiumReviewCards] = useState([]);
+  const [reviewCards, setReviewCards] = useState([]);
+
+  useEffect(() => {
+    fetch("/company/list", {
+      method: "GET",
+    }).then(res => {
+      console.log(res.json());
+    });
+  }, []);
+
   return (
     <section className="popular-tags">
       <div className="container mx-auto p-4">
