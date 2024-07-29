@@ -1,0 +1,38 @@
+.sandbox__carousel {
+  position: relative;
+}
+
+$slide-spacing: 20px;
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  flex-direction: row;
+  margin-left: -20px;
+}
+
+.embla__slide {
+  padding-left: $slide-spacing;
+  position: relative;
+
+  & > img {
+    width: 320px;
+    display: block;
+    object-fit: cover;
+
+    @media screen and (min-width: 500px) {
+      min-width: 360px;
+    }
+  }
+
+  & > .embla__slide__link {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    text-decoration: underline;
+    color: white;
+    font-size: 10px;
+  }
+}

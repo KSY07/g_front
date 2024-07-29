@@ -1,22 +1,18 @@
 "use client";
-
-import { useEffect } from "react";
-import { Modal, useDisclosure } from "@nextui-org/modal";
-
-import { RequestQuotationModal } from "@/components/modals/RequestQuotationModal";
-import { MainBanner } from "@/components/main/MainBanner";
 import { PopularTags } from "@/components/main/PopularTags";
-import { Projects } from "@/components/main/Projects";
-import { Reviews } from "@/components/main/Reviews";
-import { Story } from "@/components/main/Story";
+import {Carousel} from "@/components/carousel/Carousel";
 
 export default function Home() {
 
-
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <MainBanner />
-      <PopularTags />
-    </main>
+    return (
+      <>
+          <h1 className="text-xl text-center mb-10">공간을 더욱 스마트하게, 공간 손길</h1>
+          <div className="p-10">
+            <Carousel />
+          </div>
+          <main className="flex min-h-screen flex-col items-center p-10">
+            <PopularTags />
+          </main>
+      </>
   );
 }

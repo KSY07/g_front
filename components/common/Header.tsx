@@ -11,7 +11,7 @@ import {
   NavbarMenuToggle,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Modal, useDisclosure } from "@nextui-org/modal";
@@ -24,6 +24,8 @@ import { CompanyAddRequestModal } from "@/components/modals/CompanyAddRequestMod
 import "react-toastify/dist/ReactToastify.css";
 import { Tooltip } from "@nextui-org/tooltip";
 import { LoginModal } from "@/components/modals/LoginModal";
+import { decode } from 'querystring';
+import {CreateBoardTipModal} from "@/components/modals/CreateBoardTipModal";
 
 const useRequestDisclosure = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -34,6 +36,17 @@ const useRequestDisclosure = () => {
     onRequestModalOpenChange: onOpenChange,
   };
 };
+
+const useCreateBoardTipDisclosure = () => {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  return {
+    isCreateBoardModalOpen: isOpen,
+    onCreateBoardModalOpen: onOpen,
+    onCreateBoardModalOpenChange: onOpenChange,
+    onCreateBoardModalClose: onClose,
+  }
+}
 
 const useCompanyRegDisclosure = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -59,6 +72,17 @@ const useSignInDisclosure = () => {
 
 export const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [hasLogin, setHasLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    //@ts-ignore
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setIsAdmin(true);
+    setHasLogin(true);
+    console.log(userInfo);
+  }, []);
+
   const { isRequestModalOpen, onRequestModalOpen, onRequestModalOpenChange } =
     useRequestDisclosure();
   const {
@@ -73,6 +97,14 @@ export const Header = () => {
     onSignInModalOpenChange,
     onSignInModalClose,
   } = useSignInDisclosure();
+
+  const {
+      isCreateBoardModalOpen ,
+      onCreateBoardModalOpen,
+      onCreateBoardModalOpenChange,
+      onCreateBoardModalClose,
+  } = useCreateBoardTipDisclosure();
+
 
   const menuItems = ["시공 사례", "시공 전문가", "고객 후기", "로그 아웃"];
   const modalCompleteCallback = (noti: string) => {
@@ -106,7 +138,15 @@ export const Header = () => {
         size="xl"
         onOpenChange={onSignInModalOpenChange}
       >
-        <LoginModal />
+        <LoginModal onClose={onSignInModalClose} />
+      </Modal>
+        {/* 팁 작성 게시판 모달 */}
+      <Modal
+          isOpen={isCreateBoardModalOpen}
+          size="xl"
+          onOpenChange={onCreateBoardModalOpenChange}
+      >
+        <CreateBoardTipModal />
       </Modal>
       <Navbar
         isBordered
@@ -181,6 +221,12 @@ export const Header = () => {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="end">
+          {hasLogin && isAdmin &&
+              <Button onClick={() => onCreateBoardModalOpen()}>
+                게시글 작성
+              </Button>
+          }
+
           <Tooltip
             color="primary"
             content={"AI 공손이와 함께"}
