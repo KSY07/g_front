@@ -4,7 +4,12 @@ import dynamic from 'next/dynamic';
 import { useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Button } from "@nextui-org/button";
+import { toast } from "react-toastify";
 import axios from "axios";
+
+interface CreateBoardTipModalProps {
+  onClose: () => void;
+}
 
 const ReactQuill = dynamic(async () => {
   const {default: RQ} = await import("react-quill");
@@ -18,7 +23,7 @@ const ReactQuill = dynamic(async () => {
 
 
 
-export const CreateBoardTipModal = () => {
+export const CreateBoardTipModal = ({onClose}:CreateBoardTipModalProps) => {
     const [content, setContent] = useState<string>();
     const [title, setTitle] = useState<string>();
     const [thumbnail, setThumbnail] = useState();
@@ -49,7 +54,21 @@ export const CreateBoardTipModal = () => {
         content: content
       }
       const formData = new FormData();
-      formData.append("dto", contents);
+      formData.append("dto", new Blob([JSON.stringify(contents)], { type: 'application/json' }));
+      formData.append("thumbnail", thumbnailRef.current.files[0]);
+
+      axios.post('/board/tips/save', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      }).then(response => {
+          if(response.status === 201) {
+            toast("인테리어 팁 작성이 완료되었습니다. 새로고침 해주세요.");
+            onClose();
+          }
+      }).catch(error => {
+        console.log(error);
+      });
     }
 
     const imageHandler = async () => {

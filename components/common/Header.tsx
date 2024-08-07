@@ -79,10 +79,21 @@ export const Header = () => {
   useEffect(() => {
     //@ts-ignore
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setIsAdmin(true);
-    setHasLogin(true);
-    console.log(userInfo);
+    if(userInfo) {
+      setHasLogin(true);
+      if(userInfo.isAdmin) {
+        setIsAdmin(true);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+
+  }, [hasLogin]);
+
+  useEffect(() => {
+
+  }, [isAdmin]);
 
   const { isRequestModalOpen, onRequestModalOpen, onRequestModalOpenChange } =
     useRequestDisclosure();
@@ -147,7 +158,7 @@ export const Header = () => {
           size="5xl"
           onOpenChange={onCreateBoardModalOpenChange}
       >
-        <CreateBoardTipModal />
+        <CreateBoardTipModal onClose={onCreateBoardModalClose} />
       </Modal>
       <Navbar
         isBordered

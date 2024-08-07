@@ -1,6 +1,7 @@
 import { ReviewCard } from "@/components/main/ReviewCard";
 import {PremiumReviewCard} from "@/components/main/PremiumReviewCard";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export function PopularTags() {
   const [premiumReviewCards, setPremiumReviewCards] = useState([]);
