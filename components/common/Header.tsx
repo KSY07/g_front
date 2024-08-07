@@ -26,6 +26,7 @@ import { Tooltip } from "@nextui-org/tooltip";
 import { LoginModal } from "@/components/modals/LoginModal";
 import { decode } from 'querystring';
 import {CreateBoardTipModal} from "@/components/modals/CreateBoardTipModal";
+import { useRouter } from "next/navigation";
 
 const useRequestDisclosure = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -74,7 +75,7 @@ export const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [hasLogin, setHasLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     //@ts-ignore
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -143,7 +144,7 @@ export const Header = () => {
         {/* 팁 작성 게시판 모달 */}
       <Modal
           isOpen={isCreateBoardModalOpen}
-          size="xl"
+          size="5xl"
           onOpenChange={onCreateBoardModalOpenChange}
       >
         <CreateBoardTipModal />
@@ -162,15 +163,15 @@ export const Header = () => {
 
         <NavbarContent className="sm:hidden pr-3" justify="center">
           <NavbarBrand>
-            <img alt="logo" height={50} src="/Gongson_ico.png" width={50} />
-            <p className="font-bold text-inherit">공간손길</p>
+            <img className="cursor-pointer" alt="logo" height={50} src="/Gongson_ico.png" width={50} />
+            <p className="font-bold text-inherit cursor-pointer">공간손길</p>
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-5" justify="center">
           <NavbarBrand>
-            <img alt="logo" height={50} src="/Gongson_ico.png" width={50} />
-            <p className="font-bold text-inherit text-2xl ml-2">공간손길</p>
+            <img className="cursor-pointer" alt="logo" height={50} src="/Gongson_ico.png" width={50} onClick={() => router.push("/")}/>
+            <p className="font-bold text-inherit text-2xl ml-2 cursor-pointer" onClick={() => router.push("/")}>공간손길</p>
           </NavbarBrand>
           <NavbarItem>
             <Tooltip
