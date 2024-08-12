@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export function PopularTags() {
-  const [premiumReviewCards, setPremiumReviewCards] = useState([]);
-  const [reviewCards, setReviewCards] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
 
   useEffect(() => {
-    // fetch("/company/list", {
-    //   method: "GET",
-    // }).then(res => {
-    //   console.log(res.json());
-    // });
+    axios.get("/company/list")
+      .then(e => {
+        console.log(e.data);
+        setCompanyList(e.data);
+      }).catch(err => {
+        console.error(err);
+      })
   }, []);
 
   return (
@@ -23,8 +24,20 @@ export function PopularTags() {
           <p>선택한 지역의 시공전문가를 보여드립니다.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <PremiumReviewCard />
-          <PremiumReviewCard />
+          {
+            companyList.map((item:any) => {
+                return (
+                  <>
+                    <PremiumReviewCard
+                      companyName={item.companyName}
+                      key={item.companyName} rating={item.rating}
+                      image={item.companyThumbnail}
+                      premium={item.premium} />
+                  </>
+                )
+              }
+            )
+          }
         </div>
       </div>
     </section>

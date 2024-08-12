@@ -27,6 +27,7 @@ import { LoginModal } from "@/components/modals/LoginModal";
 import { decode } from 'querystring';
 import {CreateBoardTipModal} from "@/components/modals/CreateBoardTipModal";
 import { useRouter } from "next/navigation";
+import { SignUpModal } from "@/components/modals/SignUpModal";
 
 const useRequestDisclosure = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -37,6 +38,18 @@ const useRequestDisclosure = () => {
     onRequestModalOpenChange: onOpenChange,
   };
 };
+
+const useSignUpDisclosure = () => {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  return {
+    isSignUpModalOpen: isOpen,
+    onSignUpModalOpen: onOpen,
+    onSignUpModalOpenChange: onOpenChange,
+    onCloseSignUpModal: onClose,
+  };
+};
+
 
 const useCreateBoardTipDisclosure = () => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -117,6 +130,13 @@ export const Header = () => {
       onCreateBoardModalClose,
   } = useCreateBoardTipDisclosure();
 
+  const {
+    isSignUpModalOpen,
+    onSignUpModalOpen,
+    onSignUpModalOpenChange,
+    onCloseSignUpModal
+  } = useSignUpDisclosure();
+
 
   const menuItems = ["시공 사례", "시공 전문가", "고객 후기", "로그 아웃"];
   const modalCompleteCallback = (noti: string) => {
@@ -136,7 +156,7 @@ export const Header = () => {
       {/* 제휴사 신청 모달 */}
       <Modal
         isOpen={isCompanyModalOpen}
-        size="5xl"
+        size="3xl"
         onOpenChange={onCompanyModalOpenChange}
       >
         <CompanyAddRequestModal
@@ -159,6 +179,14 @@ export const Header = () => {
           onOpenChange={onCreateBoardModalOpenChange}
       >
         <CreateBoardTipModal onClose={onCreateBoardModalClose} />
+      </Modal>
+      {/* 회원 가입 모달*/}
+      <Modal
+        isOpen={isSignUpModalOpen}
+        size="3xl"
+        onOpenChange={onSignUpModalOpenChange}
+      >
+        <SignUpModal onClose={onCloseSignUpModal} />
       </Modal>
       <Navbar
         isBordered
@@ -286,7 +314,7 @@ export const Header = () => {
               placement="bottom-start"
               showArrow={true}
             >
-              <PersonAddAltIcon className="ml-4" fontSize="large" onClick={() => toast("준비 중 입니다.")}/>
+              <PersonAddAltIcon className="ml-4" fontSize="large" onClick={() => onSignUpModalOpen()}/>
             </Tooltip>
           </NavbarItem>
           <ThemeSwitch />
