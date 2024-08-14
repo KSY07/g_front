@@ -51,7 +51,7 @@ export const Carousel = () => {
                     {
                         slideList.map((slide, index) => {
                             return (
-                              <div className="keen-slider__slide" key={index} style={{cursor:"pointer", height: "400px"}} onClick={() => router.push(`/interiorTip?id=${slide.id}`)}>
+                              <div className="keen-slider__slide" key={index} style={{cursor:"pointer", width: "400px", height: "400px"}} onClick={() => router.push(`/interiorTip?id=${slide.id}`)}>
                                   <img src={slide.thumbnailBase64String} alt={slide.title} />
                               </div>
                             )
