@@ -27,6 +27,7 @@
 		"@nextui-org/progress": "^2.0.31",
 		"@nextui-org/radio": "^2.1.2",
 		"@nextui-org/react": "^2.4.2",
+		"@nextui-org/scroll-shadow": "^2.1.19",
 		"@nextui-org/snippet": "2.0.38",
 		"@nextui-org/switch": "2.0.31",
 		"@nextui-org/system": "2.2.1",
@@ -51,7 +52,8 @@
 		"react-quill": "^2.0.0",
 		"react-slick": "^0.30.2",
 		"react-toastify": "^10.0.5",
-		"slick-carousel": "^1.8.1"
+		"slick-carousel": "^1.8.1",
+		"swiper": "^11.1.9"
 	},
 	"devDependencies": {
 		"@types/node": "20.5.7",
