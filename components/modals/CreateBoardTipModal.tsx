@@ -82,12 +82,13 @@ export const CreateBoardTipModal = ({onClose}:CreateBoardTipModalProps) => {
           const file = input.files[0];
 
           const formData = new FormData();
-          formData.append('image', file);
+          formData.append('targetFile', file);
+          formData.append('type', "1");
 
           const range = QuillRef.current?.getEditor().getSelection(true);
 
           try {
-              const response = await axios.post('/board/image/upload', formData);
+              const response = await axios.post('/object/upload', formData);
               setImages((prevImagesUrlList)  => [...prevImagesUrlList, response.data]);
               console.log(response.data);
               QuillRef.current.getEditor()

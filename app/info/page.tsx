@@ -47,6 +47,10 @@ export default function CompanyInfo() {
                 <p>별점</p>
               </CardHeader>
               <Divider />
+
+
+
+
               <CardBody className="p-6">
                 <div>내용</div>
                 <Swiper navigation={true} modules={[Navigation]} className="mt-10" centeredSlides={true} slidesPerView={3} spaceBetween={30}>
