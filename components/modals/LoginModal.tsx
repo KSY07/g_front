@@ -63,11 +63,13 @@ export const LoginModal = ({ onClose }: LoginModalProps) => {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      className="ml-4"
                     />
-                    <Button onClick={onClickLogin}>로그인</Button>
+                    <Button onClick={onClickLogin} color="primary" size="lg" className="ml-6">로그인</Button>
                   </div>
+                  <div className="flex flex-row ml-10">
                   <RadioGroup
-                    label="회원 유형을 선택해 주세요."
+                    label="회원 유형"
                     orientation="horizontal"
                     value={userType}
                     onChange={(e) => setUserType(e.target.value)}
@@ -75,6 +77,7 @@ export const LoginModal = ({ onClose }: LoginModalProps) => {
                     <Radio value="user">일반 고객</Radio>
                     <Radio value="company">제휴 업체</Radio>
                   </RadioGroup>
+                  </div>
                 </div>
               </div>
             </ModalBody>

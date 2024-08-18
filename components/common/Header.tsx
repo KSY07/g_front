@@ -167,7 +167,7 @@ export const Header = () => {
       {/*  로그인 모달 */}
       <Modal
         isOpen={isSignInModalOpen}
-        size="xl"
+        size="2xl"
         onOpenChange={onSignInModalOpenChange}
       >
         <LoginModal onClose={onSignInModalClose} />

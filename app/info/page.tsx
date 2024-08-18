@@ -13,23 +13,37 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import './swiper_style.css';
 import { Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 
 export default function CompanyInfo() {
+  const [companyInfo, setCompanyInfo] = useState({});
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const id = searchParams.get("id");
+    axios.get(`/company?companyId=${id}`)
+      .then((res) => {
+        console.log(res.data);
+        setCompanyInfo(res.data);
+      })
+      .catch(err => console.log(err))
+  }, []);
 
   return (
     <section className="flex min-h-screen flex-col min-w-full items-center p-10">
       <Card className="max-w-[1000px] w-full p-10">
         <CardHeader className="flex flex-row justify-between gap-3 items-start">
           <div className="flex flex-col">
-            <p className="text-4xl">디자인 몬도</p>
+            <p className="text-4xl">{companyInfo.companyName}</p>
             <ScrollShadow className="max-w-[400px] max-h-[200px]">
               <p className="text-sm text-gray-400">테스트 회사 설명 입니다. 회사 설명입니다. 회사 설명입니다.</p>
             </ScrollShadow>
           </div>
           <div className="flex w-1/2 ml-4">
             <Image alt="Logo" className="object-cover rounded-xl"
-                   src="https://nextui.org/images/hero-card-complete.jpeg"
+                   src={companyInfo.companyThumbnail}
             />
           </div>
         </CardHeader>
@@ -47,10 +61,6 @@ export default function CompanyInfo() {
                 <p>별점</p>
               </CardHeader>
               <Divider />
-
-
-
-
               <CardBody className="p-6">
                 <div>내용</div>
                 <Swiper navigation={true} modules={[Navigation]} className="mt-10" centeredSlides={true} slidesPerView={3} spaceBetween={30}>
