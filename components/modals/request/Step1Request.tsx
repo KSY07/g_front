@@ -18,6 +18,9 @@ export const Step1Request = (p:Step1RequestProps) => {
             <RadioGroup value={p.interiorTypeSelected} onValueChange={p.setInteriorTypeSelected}>
                 <Radio value="apart" size="lg">아파트</Radio>
                 <Radio value="villa" size="lg">빌라</Radio>
+
+
+                
                 <Radio value="house" size="lg">주택</Radio>
                 <Radio value="officetel" size="lg">오피스텔</Radio>
             </RadioGroup>

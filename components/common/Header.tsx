@@ -166,7 +166,7 @@ export const Header = () => {
       </Modal>
       {/*  로그인 모달 */}
       <Modal
-        isOpen={isSignInModalOpen}
+        isOpen={isSignInModalOpen}ㅁ
         size="2xl"
         onOpenChange={onSignInModalOpenChange}
       >
@@ -219,7 +219,7 @@ export const Header = () => {
               placement="bottom-start"
               showArrow={true}
             >
-              <Link color="foreground" href="#">
+              <Link color="foreground" href="/aidemos">
                 AI 맞춤 설계
               </Link>
             </Tooltip>

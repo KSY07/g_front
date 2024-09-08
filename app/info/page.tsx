@@ -46,18 +46,23 @@ const useConstructionExampleDisclosure = () => {
 export default function CompanyInfo() {
   const {isReviewModalOpen, onReviewModalOpen, onReviewModalOpenChange, onReviewModalClose} = useReviewDisclosure();
   const {isCEModalOpen, onCEModalOpen, onCEModalOpenChange, onCEModalClose} = useConstructionExampleDisclosure();
-  const [companyInfo, setCompanyInfo] = useState({});
-  const [reviewList, setReviewList] = useState([]);
-  const [constructionExampleList, setConstructionExampleList] = useState([]);
+  const [companyInfo, setCompanyInfo] = useState({
+    id: 0,
+    companyThumbnail: "",
+    companyName: "",
+    companyID: "",
+    rating: 0.0,
+    isPremium: false,
+    reviewList: [],
+    constructionExampleList: []
+  });
   const searchParams = useSearchParams();
+
   useEffect(() => {
     const id = searchParams.get("id");
     axios.get(`/board/companyInfo?companyPk=${id}`)
       .then((res) => {
-        console.log(res.data);
         setCompanyInfo(res.data);
-        setReviewList(res.data.reviewList);
-        setConstructionExampleList(res.data.constructionExampleList);
       })
       .catch(err => console.log(err));
   }, []);
@@ -94,37 +99,37 @@ export default function CompanyInfo() {
           </div>
           <div className="flex flex-col p-10">
             {
-              constructionExampleList.map(ce => {
-                return (
-                  <>
-                    <Card className="max-w-[800px] w-full p-10">
-                      <CardHeader className="flex flex-col items-start">
-                        <p className="text-xl">{ce.title}</p>
-                      </CardHeader>
-                      <Divider />
-                      <CardBody className="p-6">
-                        <div>내용</div>
-                        <div>{ce.contents}</div>
-                        <Swiper navigation={true} modules={[Navigation]} className="mt-10" centeredSlides={true}
-                                slidesPerView={3} spaceBetween={30}>
-                          {
-                            ce.imageUrlList.map((url, index) => {
-                              return (<>
-                                <SwiperSlide>
-                                  <Image key={index}
-                                         alt="Logo" className="object-cover rounded-xl"
-                                         src={url}
-                                         width={400} />
-                                </SwiperSlide>
-                              </>)
-                            })
-                          }
-                        </Swiper>
-                      </CardBody>
-                    </Card>
-                  </>
-                )
-              })
+              // companyInfo.constructionExampleList.map(ce => {
+              //   return (
+              //     <>
+              //       <Card className="max-w-[800px] w-full p-10">
+              //         <CardHeader className="flex flex-col items-start">
+              //           <p className="text-xl">{ce.title}</p>
+              //         </CardHeader>
+              //         <Divider />
+              //         <CardBody className="p-6">
+              //           <div>내용</div>
+              //           <div>{ce.contents}</div>
+              //           <Swiper navigation={true} modules={[Navigation]} className="mt-10" centeredSlides={true}
+              //                   slidesPerView={3} spaceBetween={30}>
+              //             {
+              //               ce.imageUrlList.map((url, index) => {
+              //                 return (<>
+              //                   <SwiperSlide>
+              //                     <Image key={index}
+              //                            alt="Logo" className="object-cover rounded-xl"
+              //                            src={url}
+              //                            width={400} />
+              //                   </SwiperSlide>
+              //                 </>)
+              //               })
+              //             }
+              //           </Swiper>
+              //         </CardBody>
+              //       </Card>
+              //     </>
+              //   )
+              // })
             }
           </div>
           <Divider />
@@ -134,10 +139,10 @@ export default function CompanyInfo() {
           </div>
           <div className="flex flex-col p-10">
             {
-              reviewList.map(review => {
+              companyInfo.reviewList.map(review => {
                 return (
                   <>
-                    <Card className="max-w-[800px] w-full p-10">
+                    <Card className="max-w-[800px] w-full p-10 mt-10">
                       <CardHeader className="flex flex-col items-start">
                         <p className="text-xl">{review.title}</p>
                         <p>{review.userName}</p>

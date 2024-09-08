@@ -50,7 +50,7 @@ export const RequestQuotationModal = () => {
     console.log(data);
   };
 
-  const renderContent = () => {
+  const renderHouseContent = () => {
     switch (step) {
       case 0:
         setProgress(16.6667);
@@ -128,7 +128,7 @@ export const RequestQuotationModal = () => {
                   value={progress}
                 />
               </div>
-              <>{renderContent()}</>
+              <>{renderHouseContent()}</>
             </ModalBody>
             <ModalFooter />
           </>
