@@ -4,8 +4,11 @@ import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { UserPromptBox } from "@/app/aidemos/UserPromptBox";
 import {GPTPromptBox} from "@/app/aidemos/GPTPromptBox";
+import axios from "axios";
+import { Radio, RadioGroup } from "@nextui-org/radio";
 
 export default function AIDemos() {
+  const [requestType, setRequestType] = useState<string>();
   const [prompt, setPrompt] = useState<string>();
   const [userPromptList, setUserPromptList] = useState<any[]>([]);
   const [gptPromptList, setGPTPromptList] = useState<any[]>([]);
@@ -13,6 +16,13 @@ export default function AIDemos() {
   const onClickSendMessage = () => {
     if(prompt !== null && prompt.length > 0) {
       setUserPromptList([...userPromptList, prompt]);
+
+      axios.post("http://localhost:8000/gpt/request", {
+        prompt: prompt
+      }).then(response => {
+        console.log(response.data);
+        setGPTPromptList([...gptPromptList, response.data.gpt_response.content]);
+      }).catch(err => console.error(err));
       setPrompt("");
     }
   }
@@ -26,6 +36,17 @@ export default function AIDemos() {
   return (<>
     <section className="flex flex-col">
       <p className="text-3xl">AI 맞춤 설계(Beta)</p>
+      <div>
+        <RadioGroup
+          label="요청 유형"
+          orientation="horizontal"
+          value={requestType}
+          onChange={(e) => setRequestType(e.target.value)}
+        >
+          <Radio value={"prompt"}/>
+          <Radio value={"image"} />
+        </RadioGroup>
+      </div>
       <section className="flex flex-col">
         <div id="chatBox" className="w-full h-96 border-1 border-gray-300 rounded-lg mt-10 overflow-y-auto">
           {
@@ -34,7 +55,15 @@ export default function AIDemos() {
               return (
                 <>
                   <UserPromptBox prompt={prompt} />
-                  <GPTPromptBox prompt={gptResponse} />
+                </>
+              )
+            })
+          }
+          {
+            gptPromptList.map((prompt) => {
+              return (
+                <>
+                  <GPTPromptBox prompt={prompt} />
                 </>
               )
             })
