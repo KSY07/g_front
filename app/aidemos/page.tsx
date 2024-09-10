@@ -7,6 +7,11 @@ import {GPTPromptBox} from "@/app/aidemos/GPTPromptBox";
 import axios from "axios";
 import { Radio, RadioGroup } from "@nextui-org/radio";
 
+interface PromptType {
+  type: string,
+  result: string,
+}
+
 export default function AIDemos() {
   const [requestType, setRequestType] = useState<string>();
   const [prompt, setPrompt] = useState<string>();
@@ -16,14 +21,24 @@ export default function AIDemos() {
   const onClickSendMessage = () => {
     if(prompt !== null && prompt.length > 0) {
       setUserPromptList([...userPromptList, prompt]);
-
-      axios.post("http://localhost:8000/gpt/request", {
-        prompt: prompt
-      }).then(response => {
-        console.log(response.data);
-        setGPTPromptList([...gptPromptList, response.data.gpt_response.content]);
-      }).catch(err => console.error(err));
-      setPrompt("");
+      if(requestType === "prompt") {
+        axios.post("/gpt/request", {
+          prompt: prompt
+        }).then(response => {
+          console.log(response.data);
+          setGPTPromptList([...gptPromptList, response.data.gpt_response.content]);
+        }).catch(err => console.error(err));
+        setPrompt("");
+      }
+      else {
+        axios.post("/gpt/request/image", {
+          prompt: prompt
+        }).then(response => {
+          console.log(response.data);
+          setGPTPromptList([...gptPromptList, response.data.gpt_response.content])
+        }).catch(err => console.error(err));
+        setPrompt("");
+      }
     }
   }
 
@@ -32,6 +47,13 @@ export default function AIDemos() {
       onClickSendMessage();
     }
   }
+  const ExamplePrompt = "안녕하세요. AI 인테리어 맞춤 상담원 공손이 입니다.\n" +
+    "\n" +
+    "- 구체적인 수치와 내용을 적어주시면, 더. 높은 품질의 답변을 드릴게요.\n" +
+    "\n" +
+    "  ex) \n" +
+    "- 화이트 와 우드톤의 색상을 쓴 순대국집을 디자인해줘 \n" +
+    "- (치수를  적고) 단면도를 그려줘";
 
   return (<>
     <section className="flex flex-col">
@@ -49,6 +71,7 @@ export default function AIDemos() {
       </div>
       <section className="flex flex-col">
         <div id="chatBox" className="w-full h-96 border-1 border-gray-300 rounded-lg mt-10 overflow-y-auto">
+          <GPTPromptBox prompt={ExamplePrompt} />
           {
             userPromptList.map((prompt) => {
               const gptResponse = "TEST RESPONSE";
